@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noEmit": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": true,
+    "target": "ESNext",
+    "outDir": "dist",
+  },
+  "include": ["src"],
+    "ts-node": {
+      "compilerOptions": {
+        "module": "CommonJS",
+        "esModuleInterop": true
+      }
+  }
+}
