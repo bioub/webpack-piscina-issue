@@ -1,15 +1,16 @@
-import webpack from "webpack"
-import path from "path"
+import webpack from 'webpack';
+import path from 'path';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const config: webpack.Configuration = {
-  target: "electron-main",
-  entry: "./src/index.ts",
+  target: 'electron-main',
+  entry: './src/index.ts',
 
   module: {
     rules: [
       {
         test: /\.(j|t)sx?$/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
           cacheDirectory: true,
@@ -17,7 +18,7 @@ const config: webpack.Configuration = {
           compact: true,
           presets: [
             [
-              "@babel/preset-env",
+              '@babel/preset-env',
               {
                 useBuiltIns: false,
                 corejs: 3,
@@ -27,27 +28,27 @@ const config: webpack.Configuration = {
                 },
               },
             ],
-            "@babel/preset-typescript",
+            '@babel/preset-typescript',
           ],
         },
       },
       {
         test: /\.worker\.(c|m)?(ts|js)$/i,
         use: {
-          loader: "worker-loader",
+          loader: 'worker-loader',
           options: {
-            filename: "[name].js",
+            filename: '[name].js',
           },
         },
       },
     ],
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, 'dist'),
   },
 
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
   node: {
@@ -57,6 +58,16 @@ const config: webpack.Configuration = {
   optimization: {
     minimize: false,
   },
-}
 
-export default config
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: 'node_modules/piscina/dist/src/worker.js', to: 'worker.js' },
+        { from: 'node_modules/piscina/dist/src/common.js', to: 'common.js' },
+        { from: 'src/monitor.worker.js', to: 'monitor.worker.js' },
+      ],
+    }),
+  ],
+};
+
+export default config;

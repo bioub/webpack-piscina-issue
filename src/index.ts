@@ -1,6 +1,6 @@
-import Piscina from "piscina"
-import "./monitor.worker"
+import Piscina from 'piscina';
+import { resolve } from 'path';
 
-const piscina = new Piscina({ filename: "./monitor.worker.js" })
+const piscina = new Piscina({ filename: resolve(__dirname, './monitor.worker.js') });
 
-piscina.run({})
+piscina.run({});
